@@ -3,8 +3,6 @@ import react from '@vitejs/plugin-react'
 import { copyFileSync } from 'fs'
 import { resolve } from 'path'
 
-import { cloudflare } from "@cloudflare/vite-plugin";
-
 export default defineConfig({
   plugins: [react(), {
     name: 'cloudflare-spa-fallback',
@@ -15,7 +13,7 @@ export default defineConfig({
         resolve(__dirname, 'dist/200.html')
       )
     },
-  }, cloudflare()],
+  }],
   server: {
     host: true,
     port: 5173,
