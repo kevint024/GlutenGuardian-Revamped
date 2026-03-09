@@ -9,7 +9,7 @@ export default function ScanPage() {
   const [scanning, setScanning] = useState(false)
   const [error, setError] = useState('')
   const scannerRef = useRef<Html5Qrcode | null>(null)
-  const handledRef = useRef(false)
+  const scanHandledRef = useRef(false)
   const navigate = useNavigate()
 
   // Safe stop — wraps every call in try/catch, checks scanning state
@@ -18,26 +18,20 @@ export default function ScanPage() {
     if (!scanner) return
     scannerRef.current = null
     try {
-      // html5-qrcode exposes getState: 1=NOT_STARTED, 2=SCANNING, 3=PAUSED
       const state = scanner.getState?.()
       if (state === 2 || state === 3) {
         await scanner.stop()
       }
-    } catch {
-      // ignore — scanner might already be stopped or in a bad state
-    }
-    try {
-      scanner.clear()
-    } catch {
-      // ignore — DOM element may already be cleaned up
-    }
+    } catch {}
+    try { scanner.clear() } catch {}
     setScanning(false)
   }, [])
 
-  const handleBarcode = useCallback((barcode: string) => {
-    const sanitized = barcode.replace(/[^0-9]/g, '')
-    if (sanitized.length < 4 || handledRef.current) return
-    handledRef.current = true
+  // Camera scan handler — guarded against rapid duplicate fires
+  const handleCameraScan = useCallback((decodedText: string) => {
+    const sanitized = decodedText.replace(/[^0-9]/g, '')
+    if (sanitized.length < 4 || scanHandledRef.current) return
+    scanHandledRef.current = true
     navigate(`/product/${sanitized}`)
   }, [navigate])
 
@@ -45,10 +39,9 @@ export default function ScanPage() {
     if (mode !== 'camera') return
 
     let cancelled = false
-    handledRef.current = false
+    scanHandledRef.current = false
 
     const run = async () => {
-      // Small delay to ensure DOM has the #barcode-reader div
       await new Promise(r => setTimeout(r, 50))
       if (cancelled) return
 
@@ -62,12 +55,11 @@ export default function ScanPage() {
         await scanner.start(
           { facingMode: 'environment' },
           { fps: 10, qrbox: { width: 250, height: 100 }, aspectRatio: 1.333 },
-          (decodedText) => handleBarcode(decodedText),
+          (decodedText) => handleCameraScan(decodedText),
           () => {}
         )
 
         if (cancelled) {
-          // Cleanup already ran while we were awaiting — tear down immediately
           try { await scanner.stop() } catch {}
           try { scanner.clear() } catch {}
           scannerRef.current = null
@@ -91,11 +83,15 @@ export default function ScanPage() {
       cancelled = true
       safeStop()
     }
-  }, [mode, handleBarcode, safeStop])
+  }, [mode, handleCameraScan, safeStop])
 
+  // Manual entry — no guard needed, just navigate directly
   const handleManualSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    handleBarcode(manualBarcode)
+    const sanitized = manualBarcode.replace(/[^0-9]/g, '')
+    if (sanitized.length >= 4) {
+      navigate(`/product/${sanitized}`)
+    }
   }
 
   return (

@@ -13,14 +13,30 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
+  const [retryCount, setRetryCount] = useState(0)
+
   useEffect(() => {
     if (!barcode) return
     setLoading(true)
     setError('')
-    fetchProductByBarcode(barcode)
-      .then(data => {
-        setProduct(data)
-        if (data.found) {
+
+    const loadProduct = async () => {
+      let data: ProductData
+      try {
+        data = await fetchProductByBarcode(barcode)
+      } catch (err: any) {
+        setError(
+          err?.name === 'AbortError'
+            ? 'Request timed out. The server may be slow — please try again.'
+            : `Failed to fetch product. ${err?.message || 'Please check your connection.'}`
+        )
+        setLoading(false)
+        return
+      }
+
+      setProduct(data)
+      if (data.found) {
+        try {
           const result = analyzeIngredients(data.ingredients + ' ' + data.allergens + ' ' + data.traces)
           addHistory({
             type: 'scan',
@@ -28,15 +44,15 @@ export default function ProductDetail() {
             barcode,
             status: result.status,
           })
+        } catch {
+          // Processing error shouldn't block showing the product
         }
-      })
-      .catch((err: any) => setError(
-        err?.name === 'AbortError' 
-          ? 'Request timed out. The server may be slow — please try again.' 
-          : 'Failed to fetch product. Please check your connection.'
-      ))
-      .finally(() => setLoading(false))
-  }, [barcode])
+      }
+      setLoading(false)
+    }
+
+    loadProduct()
+  }, [barcode, retryCount])
 
   if (loading) {
     return (
@@ -53,7 +69,13 @@ export default function ProductDetail() {
         <button className="back-btn" onClick={() => navigate(-1)}>
           <ArrowLeft size={16} /> Back
         </button>
-        <div className="info-box info-box-amber">{error}</div>
+        <div className="info-box info-box-amber">
+          {error}
+          <br />
+          <button className="btn btn-sm btn-primary" style={{ marginTop: 8 }} onClick={() => setRetryCount(c => c + 1)}>
+            Retry
+          </button>
+        </div>
       </div>
     )
   }
