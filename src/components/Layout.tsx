@@ -57,7 +57,7 @@ export default function Layout() {
       </nav>
         <footer className="disclaimer-footer">
           <span>
-            Use at your own risk. Not medical advice. See <a href="https://kevintyler.tech" target="_blank" rel="noopener noreferrer">kevintyler.tech</a> for more info.
+            Use at your own risk. Not medical advice. Made by <a href="https://kevintyler.tech" target="_blank" rel="noopener noreferrer">kevintyler.tech</a>
           </span>
         </footer>
     </div>
