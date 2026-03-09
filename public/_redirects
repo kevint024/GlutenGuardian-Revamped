@@ -1,1 +1,8 @@
-/* /index.html 200
+/scan /index.html 200
+/search /index.html 200
+/ingredients /index.html 200
+/dish /index.html 200
+/scan-image /index.html 200
+/favorites /index.html 200
+/guide /index.html 200
+/product/* /index.html 200
