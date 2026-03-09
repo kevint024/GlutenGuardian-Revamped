@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import InstallPrompt from './components/InstallPrompt'
 import HomePage from './pages/HomePage'
 import ScanPage from './pages/ScanPage'
 import SearchPage from './pages/SearchPage'
@@ -14,6 +15,7 @@ import ProductDetail from './pages/ProductDetail'
 export default function App() {
   return (
     <BrowserRouter>
+      <InstallPrompt />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
