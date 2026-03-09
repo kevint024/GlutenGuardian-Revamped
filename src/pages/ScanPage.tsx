@@ -10,6 +10,7 @@ export default function ScanPage() {
   const [error, setError] = useState('')
   const scannerRef = useRef<Html5Qrcode | null>(null)
   const handledRef = useRef(false)
+  const mountedRef = useRef(false)
   const navigate = useNavigate()
 
   const handleBarcode = (barcode: string) => {
@@ -41,6 +42,13 @@ export default function ScanPage() {
         },
         () => {}
       )
+      // If cleanup ran while we were awaiting start(), stop immediately
+      if (!mountedRef.current) {
+        try { await scanner.stop() } catch {}
+        try { scanner.clear() } catch {}
+        scannerRef.current = null
+        return
+      }
       setScanning(true)
     } catch (err: any) {
       setError(
@@ -51,21 +59,30 @@ export default function ScanPage() {
     }
   }
 
-  const stopScanner = () => {
-    if (scannerRef.current) {
-      scannerRef.current.stop().catch(() => {})
-      scannerRef.current.clear()
-      scannerRef.current = null
+  const stopScanner = async () => {
+    const scanner = scannerRef.current
+    scannerRef.current = null
+    if (scanner) {
+      try {
+        const state = scanner.getState()
+        // Only stop if actually scanning (state 2 = SCANNING, 3 = PAUSED)
+        if (state === 2 || state === 3) {
+          await scanner.stop()
+        }
+      } catch {}
+      try { scanner.clear() } catch {}
     }
     setScanning(false)
   }
 
   useEffect(() => {
     if (mode === 'camera') {
+      mountedRef.current = true
       handledRef.current = false
       startScanner()
     }
     return () => {
+      mountedRef.current = false
       stopScanner()
     }
   }, [mode])
