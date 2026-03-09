@@ -999,6 +999,30 @@ textarea.input {
   color: var(--green-700);
 }
 
+/* Disclaimer footer */
+.disclaimer-footer {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 48px;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255,255,255,0.95);
+  color: var(--gray-500);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 8px 12px;
+  z-index: 99;
+  box-shadow: 0 -1px 8px rgba(0,0,0,0.03);
+  border-top: 1px solid var(--gray-100);
+}
+
+.disclaimer-footer a {
+  color: var(--green-600);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
 /* Dish search special card */
 .dish-result {
   padding: 20px;
