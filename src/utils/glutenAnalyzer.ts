@@ -116,62 +116,15 @@ export function analyzeIngredients(ingredientText: string): AnalysisResult {
   };
 }
 
-// Analyze a dish name by checking common gluten-containing dishes
-const GLUTEN_DISHES: Record<string, { status: 'safe' | 'caution' | 'unsafe'; info: string }> = {
-  'pizza': { status: 'unsafe', info: 'Pizza crust is made with wheat flour. Look for gluten-free crust options.' },
-  'pasta': { status: 'unsafe', info: 'Traditional pasta is made from wheat semolina/durum. Choose rice, corn, or legume-based pasta.' },
-  'spaghetti': { status: 'unsafe', info: 'Made from wheat flour. Try rice noodles or zucchini noodles instead.' },
-  'bread': { status: 'unsafe', info: 'Most bread contains wheat flour. Look for certified gluten-free bread.' },
-  'sandwich': { status: 'unsafe', info: 'Sandwiches use bread (wheat). Use gluten-free bread or lettuce wraps.' },
-  'burger': { status: 'caution', info: 'The bun contains wheat. The patty is usually safe. Ask for lettuce wrap or GF bun.' },
-  'pancake': { status: 'unsafe', info: 'Made with wheat flour. Use buckwheat or rice flour pancake mixes.' },
-  'waffle': { status: 'unsafe', info: 'Made with wheat flour. Gluten-free waffle mixes are available.' },
-  'cake': { status: 'unsafe', info: 'Cakes use wheat flour. Look for almond or coconut flour cakes.' },
-  'cookie': { status: 'unsafe', info: 'Most cookies use wheat flour. Try GF cookie brands.' },
-  'muffin': { status: 'unsafe', info: 'Made with wheat flour. GF muffin options exist.' },
-  'croissant': { status: 'unsafe', info: 'Made with wheat flour and butter. Very difficult to find GF versions.' },
-  'bagel': { status: 'unsafe', info: 'Made from wheat flour. Some bakeries offer GF bagels.' },
-  'cereal': { status: 'caution', info: 'Many cereals contain wheat or barley malt. Check labels for GF certification.' },
-  'beer': { status: 'unsafe', info: 'Beer is brewed from barley/wheat. Try gluten-free beer or cider.' },
-  'soy sauce': { status: 'unsafe', info: 'Traditional soy sauce contains wheat. Use tamari (wheat-free) instead.' },
-  'fried chicken': { status: 'unsafe', info: 'Breading contains wheat flour. Look for cornmeal-crusted options.' },
-  'fish and chips': { status: 'unsafe', info: 'Batter uses wheat flour. Some restaurants offer GF batter.' },
-  'chicken nuggets': { status: 'unsafe', info: 'Breading contains wheat. Air-fried plain chicken is safe.' },
-  'noodles': { status: 'caution', info: 'Most noodles contain wheat. Rice noodles and glass noodles are GF.' },
-  'ramen': { status: 'unsafe', info: 'Ramen noodles are wheat-based. Look for rice ramen alternatives.' },
-  'couscous': { status: 'unsafe', info: 'Couscous is made from wheat semolina. Try cauliflower couscous.' },
-  'salad': { status: 'caution', info: 'Salads are usually safe, but watch for croutons, dressings, and breaded toppings.' },
-  'soup': { status: 'caution', info: 'Many soups use flour as thickener. Ask about ingredients.' },
-  'steak': { status: 'safe', info: 'Plain steak is naturally gluten-free. Watch for marinades and sauces.' },
-  'grilled chicken': { status: 'safe', info: 'Plain grilled chicken is GF. Be cautious of marinades.' },
-  'rice': { status: 'safe', info: 'Plain rice is naturally gluten-free.' },
-  'sushi': { status: 'caution', info: 'Rice and fish are GF, but soy sauce and tempura contain gluten. Use tamari.' },
-  'tacos': { status: 'caution', info: 'Corn tortillas are GF. Flour tortillas contain wheat. Check fillings.' },
-  'burrito': { status: 'unsafe', info: 'Flour tortillas contain wheat. Ask for a burrito bowl instead.' },
-  'omelette': { status: 'safe', info: 'Eggs are naturally GF. Watch for added pancake batter (some restaurants).' },
-  'french fries': { status: 'caution', info: 'Potatoes are GF but may be coated in flour or share a fryer with breaded items.' },
-  'ice cream': { status: 'caution', info: 'Plain ice cream is usually GF. Watch for cookie/cake mix-ins and cones.' },
-  'chocolate': { status: 'caution', info: 'Plain chocolate is often GF. Check for malt, wafers, or cookie pieces.' },
-  'popcorn': { status: 'safe', info: 'Popcorn is naturally gluten-free. Watch for flavorings.' },
-  'nachos': { status: 'safe', info: 'Corn chips are GF. Watch for flour-based toppings and cross-contamination.' },
-  'curry': { status: 'caution', info: 'Most curries are GF. Watch for flour-thickened sauces and naan bread.' },
-  'dim sum': { status: 'unsafe', info: 'Most dim sum wrappers contain wheat flour.' },
-  'dumplings': { status: 'unsafe', info: 'Dumpling wrappers are made from wheat flour.' },
-  'spring rolls': { status: 'caution', info: 'Fried spring rolls use wheat wrappers. Fresh spring rolls with rice paper are GF.' },
-  'pad thai': { status: 'safe', info: 'Made with rice noodles and usually GF. Confirm soy sauce is GF.' },
-  'pho': { status: 'safe', info: 'Rice noodle soup, naturally GF. Check that broth and soy sauce are GF.' },
-};
+// Analyze a dish name by using the comprehensive dish database
+import { searchDishes } from '../data/dishDatabase'
 
 export function analyzeDish(dishName: string): { status: 'safe' | 'caution' | 'unsafe'; info: string } | null {
-  const normalized = normalizeText(dishName);
-  
-  for (const [dish, result] of Object.entries(GLUTEN_DISHES)) {
-    if (normalized.includes(dish) || dish.includes(normalized)) {
-      return result;
-    }
+  const results = searchDishes(dishName, 1)
+  if (results.length > 0 && results[0].score >= 35) {
+    return { status: results[0].status, info: results[0].info }
   }
-  
-  return null;
+  return null
 }
 
 export function getStatusColor(status: 'safe' | 'caution' | 'unsafe'): string {
