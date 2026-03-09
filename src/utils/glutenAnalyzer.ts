@@ -9,38 +9,207 @@ export interface AnalysisResult {
 }
 
 const GLUTEN_INGREDIENTS: string[] = [
-  'wheat', 'barley', 'rye', 'malt', 'semolina', 'triticale', 'spelt', 'farro',
-  'durum', 'vital wheat gluten', 'graham flour', 'brewer\'s yeast',
-  'hydrolyzed wheat protein', 'wheat starch', 'wheat flour', 'wheat germ',
-  'wheat bran', 'cracked wheat', 'wheat berries', 'seitan', 'fu',
-  'couscous', 'bulgur', 'einkorn', 'emmer', 'kamut', 'freekeh',
-  'wheat protein', 'wheat gluten', 'barley malt', 'malt extract',
-  'malt syrup', 'malt flavoring', 'malt vinegar', 'barley flour',
-  'barley flakes', 'rye flour', 'rye bread', 'pumpernickel',
-  'orzo', 'panko', 'bread crumbs', 'breadcrumbs',
-  'flour tortilla', 'wheat tortilla', 'atta flour', 'maida',
-  'sooji', 'rava', 'dalia', 'broken wheat',
+  // Core gluten grains
+  'wheat', 'barley', 'rye', 'triticale', 'spelt', 'farro', 'einkorn', 'emmer', 'kamut', 'freekeh',
+
+  // Wheat forms & derivatives
+  'wheat flour', 'whole wheat flour', 'white flour', 'all-purpose flour', 'all purpose flour',
+  'self-rising flour', 'self rising flour', 'enriched flour', 'enriched wheat flour',
+  'bleached flour', 'unbleached flour', 'bread flour', 'cake flour', 'pastry flour',
+  'durum', 'durum flour', 'durum wheat', 'semolina', 'semolina flour',
+  'graham flour', 'graham cracker', 'wheat starch', 'wheat germ', 'wheat germ oil',
+  'wheat bran', 'wheat protein', 'wheat gluten', 'vital wheat gluten',
+  'cracked wheat', 'wheat berries', 'bulgur', 'bulgur wheat',
+  'couscous', 'seitan', 'fu', 'gluten flour',
+  'hydrolyzed wheat protein', 'hydrolyzed wheat starch',
+  'wheat protein isolate', 'wheat dextrin',
+  'atta flour', 'atta', 'maida', 'maida flour',
+  'sooji', 'suji', 'rava', 'dalia', 'daliya', 'broken wheat',
+  'wheat farina', 'farina',
+
+  // Malt & barley derivatives
+  'malt', 'malt extract', 'malt syrup', 'malt flavoring', 'malt flavor',
+  'malt vinegar', 'malted milk', 'malted barley', 'malted barley flour',
+  'malt powder', 'malt sugar', 'maltose',
+  'barley flour', 'barley flakes', 'barley malt', 'barley malt extract',
+  'barley grass', 'barley protein', 'pearl barley', 'hulled barley',
+  'pot barley', 'barley water',
+
+  // Rye derivatives
+  'rye flour', 'rye bread', 'rye meal', 'rye flakes',
+  'pumpernickel', 'pumpernickel flour',
+
+  // Brewer's & baking
+  'brewer\'s yeast', 'brewers yeast', 'brewer yeast',
+  'baker\'s yeast extract',
+
+  // Pasta & bread products
+  'orzo', 'panko', 'panko breadcrumbs',
+  'bread crumbs', 'breadcrumbs', 'bread crumb',
+  'croutons', 'crouton', 'rusk',
+  'flour tortilla', 'wheat tortilla',
+  'pita', 'pita bread', 'naan', 'naan bread',
+  'matzo', 'matzoh', 'matza', 'matzah',
+  'udon', 'udon noodles', 'ramen noodles', 'ramen',
+  'soba noodles', 'yakisoba noodles',
+  'egg noodles', 'lo mein noodles', 'chow mein noodles',
+  'wonton wrapper', 'wonton wrappers', 'wonton skin',
+  'dumpling wrapper', 'dumpling wrappers', 'gyoza wrapper',
+  'spring roll wrapper', 'egg roll wrapper',
+  'phyllo dough', 'filo dough', 'puff pastry',
+  'pie crust', 'pizza dough', 'pizza crust',
+  'croissant', 'baguette', 'brioche',
+  'sourdough', 'focaccia', 'ciabatta',
+
+  // Sauces & condiments with wheat
+  'soy sauce', 'shoyu', 'tamari', // note: some tamari is GF but many aren't
+  'teriyaki sauce', 'teriyaki',
+  'hoisin sauce', 'hoisin',
+  'oyster sauce', // most contain wheat
+  'miso paste', // some varieties contain barley
+
+  // Cereals & snacks
+  'cream of wheat', 'farina cereal',
+  'granola', // most contain oats with wheat cross-contamination + wheat ingredients
+  'muesli',
+  'pretzels', 'pretzel',
+
+  // Beer & beverages
+  'beer', 'lager', 'ale', 'stout', 'porter',
+  'malt beverage', 'malt liquor',
+
+  // Batter & coating
+  'beer batter', 'tempura batter', 'tempura',
+  'breaded', 'breading', 'battered',
+  'flour coating', 'seasoned flour',
+
+  // Thickeners from wheat
+  'roux', 'white sauce', 'bechamel',
+  'gravy', 'gravy mix', 'gravy powder',
+  'cream sauce',
 ];
 
 const CAUTION_INGREDIENTS: string[] = [
-  'modified food starch', 'maltodextrin', 'dextrin',
-  'natural flavor', 'natural flavors', 'natural flavoring',
-  'artificial flavor', 'artificial flavors',
-  'caramel color', 'caramel coloring',
+  // Starches (may be wheat-derived)
+  'modified food starch', 'modified starch', 'food starch',
+  'modified corn starch', // usually safe but listed for awareness
+  'starch', 'vegetable starch', 'edible starch',
+  'pregelatinized starch', 'resistant starch',
+  'dextrin', 'maltodextrin', 'cyclodextrin',
+
+  // Flavorings (can contain wheat-derived carriers)
+  'natural flavor', 'natural flavors', 'natural flavoring', 'natural flavourings',
+  'artificial flavor', 'artificial flavors', 'artificial flavoring',
+  'smoke flavoring', 'smoke flavor', 'liquid smoke',
+  'seasoning', 'seasoning blend', 'seasoning mix',
+  'spice mix', 'spice blend', 'spice extract',
+  'flavor enhancer', 'flavour enhancer',
+
+  // Colors & additives
+  'caramel color', 'caramel coloring', 'caramel colour',
+  'color added', 'colour added',
+
+  // Proteins (may be wheat-derived)
   'hydrolyzed vegetable protein', 'hydrolyzed plant protein',
-  'textured vegetable protein', 'soy sauce',
-  'teriyaki sauce', 'worcestershire sauce',
-  'modified starch', 'food starch',
-  'mono and diglycerides', 'maltose',
-  'brown rice syrup', 'smoke flavoring',
-  'seasoning', 'spice mix', 'spice blend',
-  'bouillon', 'broth', 'stock',
-  'communion wafer', 'breading', 'coating',
-  'thickener', 'stabilizer', 'emulsifier',
-  'yeast extract', 'autolyzed yeast extract',
-  'hydrolyzed protein', 'vegetable protein',
-  'processed cheese', 'imitation cheese',
-  'licorice', 'candy',
+  'hydrolyzed protein', 'hydrolyzed soy protein',
+  'textured vegetable protein', 'textured soy protein', 'tvp',
+  'vegetable protein', 'plant protein', 'protein isolate',
+  'protein concentrate',
+
+  // Yeast & fermentation
+  'yeast extract', 'autolyzed yeast extract', 'autolyzed yeast',
+  'torula yeast', 'nutritional yeast', // usually safe but can have barley
+  'yeast nutrient',
+
+  // Sauces & condiments
+  'worcestershire sauce', 'worcestershire',
+  'fish sauce', // some brands contain wheat
+  'barbecue sauce', 'bbq sauce',
+  'salad dressing', 'ranch dressing', 'caesar dressing',
+  'marinara sauce', // some thickened with flour
+  'curry paste', 'curry powder', // some blends contain wheat
+  'mustard', 'mustard powder', // some add wheat flour
+  'ketchup', // rarely contains gluten but some brands do
+  'mayo', 'mayonnaise', // usually safe but check
+  'hot sauce',
+
+  // Dairy & cheese
+  'processed cheese', 'imitation cheese', 'cheese sauce',
+  'cheese powder', 'cheese flavoring',
+  'cream cheese', // some flavored varieties have wheat
+  'cottage cheese', // some brands add starch
+  'sour cream', // some brands add starch
+  'ice cream', // cookie/cake varieties
+  'frozen yogurt',
+
+  // Meat & protein products
+  'sausage', 'sausages', 'hot dog', 'hot dogs',
+  'salami', 'pepperoni', 'bologna',
+  'deli meat', 'lunch meat', 'cold cuts',
+  'imitation crab', 'surimi', 'crab stick',
+  'meatball', 'meatballs', 'meat loaf', 'meatloaf',
+  'veggie burger', 'vegetable burger',
+  'chicken nugget', 'chicken nuggets',
+  'fish stick', 'fish sticks', 'fish fingers',
+  'beef jerky', 'jerky',
+  'bacon bits',
+  'protein bar', 'energy bar', 'granola bar',
+
+  // Soups & bases
+  'bouillon', 'bouillon cube', 'bouillon powder',
+  'broth', 'stock', 'stock cube', 'stock powder',
+  'soup base', 'soup mix', 'cream soup',
+  'condensed soup',
+
+  // Snacks & sweets
+  'licorice', 'liquorice', 'twizzlers',
+  'candy', 'chocolate', 'chocolate bar',
+  'communion wafer', 'wafer', 'wafers',
+  'rice cakes', // usually safe but may have flavored coatings
+  'chips', 'potato chips', 'flavored chips',
+  'tortilla chips', 'corn chips',
+  'trail mix',
+  'dried fruit', // some have wheat-based dusting
+
+  // Baking & cooking
+  'baking powder', 'baking mix',
+  'coating', 'coating mix', 'breading mix',
+  'stuffing', 'stuffing mix',
+  'crumb topping', 'streusel',
+  'thickener', 'thickening agent',
+  'stabilizer', 'stabiliser',
+  'emulsifier', 'emulsifying agent',
+  'lecithin', // usually soy but can be wheat
+  'mono and diglycerides', 'mono- and diglycerides',
+  'diglycerides', 'monoglycerides',
+  'xanthan gum', // safe but often confused; included for awareness
+  'guar gum',
+
+  // Vinegar & alcohol
+  'vinegar', 'distilled vinegar', // usually safe but some debate
+  'white vinegar', 'wine vinegar',
+  'rice vinegar', 'rice wine vinegar',
+  'cooking wine', 'cooking sherry',
+
+  // Asian ingredients
+  'miso', 'miso soup',
+  'tofu', 'fried tofu', // tofu itself is GF but fried/marinated may not be
+  'edamame', // usually safe but check seasoning
+  'rice noodles', // usually safe but check for wheat blend
+  'bean sauce', 'black bean sauce',
+  'sweet chili sauce', 'sriracha',
+  'coconut aminos', // safe alternative but listed for completeness
+
+  // Oats (controversial)
+  'oats', 'oatmeal', 'oat flour', 'oat bran',
+  'oat fiber', 'oat milk',
+  // Oats are naturally GF but frequently cross-contaminated
+
+  // Supplements & medicine
+  'glucose syrup', 'brown rice syrup',
+  'corn syrup', 'high fructose corn syrup',
+  'citric acid', // usually safe but can be wheat-derived in rare cases
+  'vitamin e', 'tocopherol', // wheat germ is a source
 ];
 
 // Common gluten-free grains for educational reference
@@ -49,6 +218,9 @@ export const SAFE_GRAINS: string[] = [
   'sorghum', 'teff', 'amaranth', 'buckwheat', 'arrowroot',
   'tapioca', 'potato starch', 'corn starch', 'almond flour',
   'coconut flour', 'chickpea flour', 'cassava flour',
+  'flaxseed meal', 'hemp flour', 'tigernut flour',
+  'sweet potato flour', 'plantain flour', 'water chestnut flour',
+  'sago', 'kudzu starch', 'lotus root starch',
 ];
 
 function normalizeText(text: string): string {
