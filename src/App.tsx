@@ -8,6 +8,7 @@ import DishPage from './pages/DishPage'
 import ScanImagePage from './pages/ScanImagePage'
 import FavoritesPage from './pages/FavoritesPage'
 import GuidePage from './pages/GuidePage'
+import RestaurantPage from './pages/RestaurantPage'
 import ProductDetail from './pages/ProductDetail'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/scan-image" element={<ScanImagePage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/guide" element={<GuidePage />} />
+          <Route path="/restaurants" element={<RestaurantPage />} />
           <Route path="/product/:barcode" element={<ProductDetail />} />
         </Route>
       </Routes>

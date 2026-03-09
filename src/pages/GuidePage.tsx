@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { SAFE_GRAINS } from '../utils/glutenAnalyzer'
 
 export default function GuidePage() {
@@ -165,6 +166,9 @@ export default function GuidePage() {
               beer, soy sauce dishes, cream soups, fried foods from shared fryers, gravy
             </div>
           </div>
+          <Link to="/restaurants" className="btn btn-primary btn-full" style={{ marginTop: 8 }}>
+            🍽️ View Full Restaurant Guide →
+          </Link>
         </div>
       )}
     </div>
