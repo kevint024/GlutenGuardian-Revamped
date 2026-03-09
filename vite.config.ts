@@ -7,7 +7,6 @@ export default defineConfig({
   plugins: [react(), {
     name: 'cloudflare-spa-fallback',
     closeBundle() {
-      // Cloudflare Pages serves 200.html as SPA fallback for unmatched routes
       copyFileSync(
         resolve(__dirname, 'dist/index.html'),
         resolve(__dirname, 'dist/200.html')
