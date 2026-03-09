@@ -9,14 +9,19 @@ export default function ScanPage() {
   const [scanning, setScanning] = useState(false)
   const [error, setError] = useState('')
   const scannerRef = useRef<Html5Qrcode | null>(null)
+  const handledRef = useRef(false)
   const navigate = useNavigate()
 
   const handleBarcode = (barcode: string) => {
     const sanitized = barcode.replace(/[^0-9]/g, '')
-    if (sanitized.length >= 4) {
+    if (sanitized.length < 4 || handledRef.current) return
+    handledRef.current = true
+
+    // Defer stop + navigate out of the scanner callback to avoid deadlock
+    setTimeout(() => {
       stopScanner()
       navigate(`/product/${sanitized}`)
-    }
+    }, 0)
   }
 
   const startScanner = async () => {
@@ -57,6 +62,7 @@ export default function ScanPage() {
 
   useEffect(() => {
     if (mode === 'camera') {
+      handledRef.current = false
       startScanner()
     }
     return () => {
