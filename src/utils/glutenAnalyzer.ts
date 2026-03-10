@@ -1,7 +1,7 @@
 // Gluten Analysis Engine - Core detection logic
 
 export interface AnalysisResult {
-  status: 'safe' | 'caution' | 'unsafe';
+  status: 'safe' | 'caution' | 'unsafe' | 'unknown';
   glutenIngredients: string[];
   cautionIngredients: string[];
   allIngredients: string[];
@@ -229,6 +229,17 @@ function normalizeText(text: string): string {
 
 export function analyzeIngredients(ingredientText: string): AnalysisResult {
   const normalized = normalizeText(ingredientText);
+
+  if (!normalized) {
+    return {
+      status: 'unknown',
+      glutenIngredients: [],
+      cautionIngredients: [],
+      allIngredients: [],
+      summary: 'No ingredient information available. Unable to determine gluten status.',
+    };
+  }
+
   const ingredients = normalized
     .split(/[,;()\[\]\/\n]+/)
     .map(s => s.trim())
@@ -265,7 +276,7 @@ export function analyzeIngredients(ingredientText: string): AnalysisResult {
   const glutenArr = Array.from(foundGluten);
   const cautionArr = Array.from(foundCaution);
 
-  let status: 'safe' | 'caution' | 'unsafe';
+  let status: 'safe' | 'caution' | 'unsafe' | 'unknown';
   let summary: string;
 
   if (glutenArr.length > 0) {
@@ -299,26 +310,29 @@ export function analyzeDish(dishName: string): { status: 'safe' | 'caution' | 'u
   return null
 }
 
-export function getStatusColor(status: 'safe' | 'caution' | 'unsafe'): string {
+export function getStatusColor(status: 'safe' | 'caution' | 'unsafe' | 'unknown'): string {
   switch (status) {
     case 'safe': return '#16a34a';
     case 'caution': return '#f59e0b';
     case 'unsafe': return '#dc2626';
+    case 'unknown': return '#6b7280';
   }
 }
 
-export function getStatusEmoji(status: 'safe' | 'caution' | 'unsafe'): string {
+export function getStatusEmoji(status: 'safe' | 'caution' | 'unsafe' | 'unknown'): string {
   switch (status) {
     case 'safe': return '✅';
     case 'caution': return '⚠️';
     case 'unsafe': return '❌';
+    case 'unknown': return 'ℹ️';
   }
 }
 
-export function getStatusLabel(status: 'safe' | 'caution' | 'unsafe'): string {
+export function getStatusLabel(status: 'safe' | 'caution' | 'unsafe' | 'unknown'): string {
   switch (status) {
     case 'safe': return 'Safe';
     case 'caution': return 'Caution';
     case 'unsafe': return 'Unsafe';
+    case 'unknown': return 'Not Enough Info';
   }
 }

@@ -6,7 +6,7 @@ export interface FavoriteItem {
   name: string;
   brand?: string;
   barcode?: string;
-  status: 'safe' | 'caution' | 'unsafe';
+  status: 'safe' | 'caution' | 'unsafe' | 'unknown';
   image?: string;
   timestamp: number;
 }
@@ -16,7 +16,7 @@ export interface HistoryItem {
   type: 'scan' | 'search' | 'manual' | 'dish';
   name: string;
   barcode?: string;
-  status: 'safe' | 'caution' | 'unsafe';
+  status: 'safe' | 'caution' | 'unsafe' | 'unknown';
   timestamp: number;
 }
 

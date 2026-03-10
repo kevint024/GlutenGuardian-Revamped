@@ -216,6 +216,11 @@ body {
   border: 2px solid var(--red-100);
 }
 
+.result-card.unknown {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border: 2px solid #d1d5db;
+}
+
 .result-emoji {
   font-size: 3rem;
   margin-bottom: 8px;
