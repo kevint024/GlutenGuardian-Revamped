@@ -291,6 +291,34 @@ export default function AboutPage() {
         <AccordionSection key={section.id} item={section} />
       ))}
 
+      {/* Bug report/contact link */}
+      <div style={{ textAlign: 'center', margin: '32px 0 0 0' }}>
+        <Link
+          to="/bugreport"
+          className="btn btn-secondary"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            textDecoration: 'none',
+            fontWeight: 600,
+            fontSize: '1rem',
+            color: 'var(--green-700)',
+            background: 'var(--green-50)',
+            border: '1px solid var(--green-200)',
+            borderRadius: 8,
+            padding: '10px 20px',
+            marginTop: 0,
+            marginBottom: 0,
+          }}
+        >
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            <Info size={18} style={{ marginRight: 6 }} />
+            Report a Bug / Contact
+          </span>
+        </Link>
+      </div>
+
       {/* Footer attribution */}
       <div
         style={{
