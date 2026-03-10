@@ -54,7 +54,7 @@ export default function GuidePage() {
       {section === 'unsafe' && (
         <div className="animate-in">
           <div className="info-box info-box-red" style={{ marginBottom: 12 }}>
-            <strong>❌ {glutenUnique.length} gluten-containing ingredients</strong> — any of these in a product means it contains gluten.
+            <strong>❌ {glutenUnique.length} gluten-containing ingredients</strong> — The app will mark these as unsafe.
           </div>
           {filterItems(glutenUnique).length === 0 && (
             <p style={{ color: 'var(--gray-400)', fontSize: '0.875rem', textAlign: 'center', padding: '20px 0' }}>No matches found.</p>
