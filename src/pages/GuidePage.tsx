@@ -1,10 +1,19 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { SAFE_GRAINS } from '../utils/glutenAnalyzer'
-import { GLUTEN_INGREDIENTS, CAUTION_INGREDIENTS } from '../utils/glutenAnalyzer'
+import { SAFE_GRAINS, GLUTEN_INGREDIENTS, CAUTION_INGREDIENTS } from '../utils/glutenAnalyzer'
 
 export default function GuidePage() {
-  const [section, setSection] = useState<'unsafe' | 'safe' | 'tips' | 'dining'>('unsafe')
+  const [section, setSection] = useState<'unsafe' | 'caution' | 'safe' | 'tips' | 'dining'>('unsafe')
+  const [search, setSearch] = useState('')
+
+  const filterItems = (items: string[]) =>
+    search.trim()
+      ? items.filter(i => i.toLowerCase().includes(search.toLowerCase()))
+      : items
+
+  // De-duplicate for display
+  const glutenUnique = [...new Set(GLUTEN_INGREDIENTS)]
+  const cautionUnique = [...new Set(CAUTION_INGREDIENTS)]
 
   return (
     <div className="animate-in">
@@ -17,6 +26,9 @@ export default function GuidePage() {
         <button className={`tab ${section === 'unsafe' ? 'active' : ''}`} onClick={() => setSection('unsafe')}>
           ❌ Avoid
         </button>
+        <button className={`tab ${section === 'caution' ? 'active' : ''}`} onClick={() => setSection('caution')}>
+          ⚠️ Caution
+        </button>
         <button className={`tab ${section === 'safe' ? 'active' : ''}`} onClick={() => setSection('safe')}>
           ✅ Safe
         </button>
@@ -28,23 +40,45 @@ export default function GuidePage() {
         </button>
       </div>
 
+      {(section === 'unsafe' || section === 'caution') && (
+        <input
+          className="input"
+          type="text"
+          placeholder={`Search ${section === 'unsafe' ? 'gluten' : 'caution'} ingredients…`}
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ marginBottom: 12 }}
+        />
+      )}
+
       {section === 'unsafe' && (
         <div className="animate-in">
-          <div className="guide-card" style={{ borderColor: 'var(--red-100)', background: 'var(--red-50)' }}>
-            <div className="guide-card-title">🌾 All Gluten Ingredients to Avoid</div>
-            <div className="tag-list">
-              {GLUTEN_INGREDIENTS.map(i => (
-                <span key={i} className="tag tag-red">{i}</span>
-              ))}
-            </div>
+          <div className="info-box info-box-red" style={{ marginBottom: 12 }}>
+            <strong>❌ {glutenUnique.length} gluten-containing ingredients</strong> — any of these in a product means it contains gluten.
           </div>
-          <div className="guide-card" style={{ borderColor: 'var(--amber-100)', background: 'var(--amber-50)' }}>
-            <div className="guide-card-title">⚠️ All Caution Ingredients</div>
-            <div className="tag-list">
-              {CAUTION_INGREDIENTS.map(i => (
-                <span key={i} className="tag tag-amber">{i}</span>
-              ))}
-            </div>
+          {filterItems(glutenUnique).length === 0 && (
+            <p style={{ color: 'var(--gray-400)', fontSize: '0.875rem', textAlign: 'center', padding: '20px 0' }}>No matches found.</p>
+          )}
+          <div className="tag-list" style={{ gap: 6 }}>
+            {filterItems(glutenUnique).map(g => (
+              <span key={g} className="tag tag-red" style={{ fontSize: '0.8125rem', padding: '5px 10px' }}>{g}</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {section === 'caution' && (
+        <div className="animate-in">
+          <div className="info-box info-box-amber" style={{ marginBottom: 12 }}>
+            <strong>⚠️ {cautionUnique.length} caution-flag ingredients</strong> — these <em>may</em> contain gluten depending on brand or processing. Always verify.
+          </div>
+          {filterItems(cautionUnique).length === 0 && (
+            <p style={{ color: 'var(--gray-400)', fontSize: '0.875rem', textAlign: 'center', padding: '20px 0' }}>No matches found.</p>
+          )}
+          <div className="tag-list" style={{ gap: 6 }}>
+            {filterItems(cautionUnique).map(c => (
+              <span key={c} className="tag tag-amber" style={{ fontSize: '0.8125rem', padding: '5px 10px' }}>{c}</span>
+            ))}
           </div>
         </div>
       )}

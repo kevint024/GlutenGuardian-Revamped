@@ -224,6 +224,8 @@ const CAUTION_INGREDIENTS: string[] = [
   'vitamin e', 'tocopherol', // wheat germ is a source
 ];
 
+export { GLUTEN_INGREDIENTS, CAUTION_INGREDIENTS }
+
 // Common gluten-free grains for educational reference
 export const SAFE_GRAINS: string[] = [
   'rice', 'corn', 'quinoa', 'oats (certified gluten-free)', 'millet',
