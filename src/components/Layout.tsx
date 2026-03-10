@@ -1,8 +1,15 @@
+import { useState, useEffect } from 'react'
 import { Outlet, NavLink, useLocation } from 'react-router-dom'
-import { Home, ScanBarcode, Search, Heart, BookOpen } from 'lucide-react'
+import { Home, ScanBarcode, Search, Heart, BookOpen, WifiOff } from 'lucide-react'
+import { checkApiStatus } from '../services/openFoodFacts'
 
 export default function Layout() {
   const location = useLocation()
+  const [apiDown, setApiDown] = useState(false)
+
+  useEffect(() => {
+    checkApiStatus().then(up => setApiDown(!up))
+  }, [])
 
   return (
     <div className="app-container">
@@ -13,6 +20,13 @@ export default function Layout() {
           <div className="header-subtitle">Your gluten-free safety companion</div>
         </div>
       </header>
+
+      {apiDown && (
+        <div className="api-status-banner">
+          <WifiOff size={16} />
+          <span>Open Food Facts is currently unreachable. Product search and scanning may not work.</span>
+        </div>
+      )}
 
       <main className="page">
         <Outlet />

@@ -122,3 +122,12 @@ export async function searchProducts(query: string, page: number = 1): Promise<{
     pageCount: Math.ceil((data.count || 0) / 20),
   };
 }
+
+export async function checkApiStatus(): Promise<boolean> {
+  try {
+    const response = await fetchWithTimeout(`${API_BASE}/api/v2/search?lc=en&page_size=1`, 5000);
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
