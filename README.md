@@ -4,6 +4,7 @@ Your personal gluten-free food safety companion. Scan, search, and verify any fo
 
 ![React](https://img.shields.io/badge/React-19-blue) ![Vite](https://img.shields.io/badge/Vite-7-purple) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![PWA](https://img.shields.io/badge/PWA-Installable-brightgreen) ![License](https://img.shields.io/badge/License-MIT-green)
 
+[Access Here](https://noglutenfor.me/)
 ## Features
 
 ### 📷 Barcode Scanning
