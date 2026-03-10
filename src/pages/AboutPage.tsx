@@ -105,16 +105,14 @@ export default function AboutPage() {
               <span style={{ color: 'var(--gray-500)', fontWeight: 700 }}>Unknown</span>.
             </li>
             <li style={{ marginBottom: 8 }}>
-              <strong>Image / Label Scanning</strong> — the Scan Label/Dish feature sends the image to{' '}
-              <a
-                href="https://openai.com"
+              <strong>Image / Label Scanning</strong> — the Scan Label/Dish feature uses <a
+                href="https://github.com/naptha/tesseract.js"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: 'var(--green-700)' }}
               >
-                OpenAI's Vision API
-              </a>{' '}
-              to extract the ingredient text, which is then analysed locally as above.
+                Tesseract.js
+              </a> for on-device OCR to extract ingredient text, which is then analysed locally as above.
             </li>
             <li>
               <strong>History & Favourites</strong> — scan history and saved favourites are stored exclusively in your browser's localStorage. Nothing is uploaded or synced.
@@ -138,7 +136,6 @@ export default function AboutPage() {
               <li>Store your scan history locally in your browser's localStorage</li>
               <li>Store your favourites locally in your browser's localStorage</li>
               <li>Fetch product data from the Open Food Facts public API (read-only, no account required)</li>
-              <li>Optionally send images to OpenAI when using the Scan Label/Dish feature</li>
             </ul>
           </div>
           <div className="info-box info-box-red" style={{ marginBottom: 12 }}>
