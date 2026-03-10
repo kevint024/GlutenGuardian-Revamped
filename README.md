@@ -1,9 +1,10 @@
 # 🛡️ Gluten Guardian Revamped
 
-Your personal gluten-free food safety companion. Scan, search, and verify any food product instantly.
+Your personal gluten-free food safety companion. Scan, search, and verify any food product instantly. 
 
 ![React](https://img.shields.io/badge/React-19-blue) ![Vite](https://img.shields.io/badge/Vite-7-purple) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![PWA](https://img.shields.io/badge/PWA-Installable-brightgreen) ![License](https://img.shields.io/badge/License-MIT-green)
 
+[Access Here](https://noglutenfor.me/)
 ## Features
 
 ### 📷 Barcode Scanning
@@ -127,6 +128,8 @@ src/
 └── utils/
     └── glutenAnalyzer.ts       # Core gluten detection engine
 ```
+##Discliamer
+Use at your own risk. Information from Gluten Guardian is not medical advice
 
 ## License
 
