@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ScanBarcode, Search, FlaskConical, UtensilsCrossed, Camera, BookOpen, Heart, History, MapPin } from 'lucide-react'
+import { ScanBarcode, Search, FlaskConical, UtensilsCrossed, Camera, BookOpen, Heart, History, MapPin, Info } from 'lucide-react'
 import { getHistory } from '../services/storage'
 
 const actions = [
@@ -10,6 +10,7 @@ const actions = [
   { to: '/scan-image', label: 'Scan Label/Dish', icon: Camera, color: '#0891b2' },
   { to: '/restaurants', label: 'Restaurant Guide', icon: MapPin, color: '#dc2626' },
   { to: '/guide', label: 'Safe Foods Guide', icon: BookOpen, color: '#4f46e5' },
+  { to: '/about', label: 'About', icon: Info, color: '#64748b' },
 ]
 
 export default function HomePage() {
