@@ -80,7 +80,16 @@ export default function SearchPage() {
       )}
 
       {products.map(p => {
-        const result = p.ingredients ? analyzeIngredients(p.ingredients) : null
+        const analysisText = [p.ingredients, p.allergens, p.traces].filter(Boolean).join(' ')
+        let result = analysisText ? analyzeIngredients(analysisText) : null
+        const hasGFLabel = p.labels?.toLowerCase().includes('gluten-free') || p.labels?.toLowerCase().includes('sans gluten')
+        const hasGlutenAllergen = p.allergens?.toLowerCase().includes('gluten')
+        if (result && hasGFLabel) {
+          result = { ...result, status: 'safe' }
+        } else if (result && hasGlutenAllergen && result.status !== 'unsafe') {
+          result = { ...result, status: 'unsafe' }
+        }
+        const statusText = result?.status === 'safe' ? 'Safe' : result?.status === 'caution' ? 'Caution' : result?.status === 'unknown' ? 'Not Enough Info' : 'Unsafe'
         return (
           <div
             key={p.code}
@@ -100,11 +109,11 @@ export default function SearchPage() {
               {result && (
                 <div className="product-status">
                   <span className={`status-badge status-${result.status}`}>
-                    {getStatusEmoji(result.status)} {result.status === 'safe' ? 'Safe' : result.status === 'caution' ? 'Caution' : 'Unsafe'}
+                    {getStatusEmoji(result.status)} {statusText}
                   </span>
                 </div>
               )}
-              {!p.ingredients && (
+              {!analysisText && (
                 <div className="product-status">
                   <span className="status-badge status-caution">❓ No ingredient data</span>
                 </div>
