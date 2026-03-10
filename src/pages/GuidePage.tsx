@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SAFE_GRAINS } from '../utils/glutenAnalyzer'
+import { GLUTEN_INGREDIENTS, CAUTION_INGREDIENTS } from '../utils/glutenAnalyzer'
 
 export default function GuidePage() {
   const [section, setSection] = useState<'unsafe' | 'safe' | 'tips' | 'dining'>('unsafe')
@@ -30,30 +31,19 @@ export default function GuidePage() {
       {section === 'unsafe' && (
         <div className="animate-in">
           <div className="guide-card" style={{ borderColor: 'var(--red-100)', background: 'var(--red-50)' }}>
-            <div className="guide-card-title">🌾 Grains to Avoid</div>
-            <div className="guide-card-text">
-              Wheat (all forms), barley, rye, triticale, spelt, farro, einkorn, emmer, kamut, freekeh, semolina, durum
-            </div>
-          </div>
-          <div className="guide-card" style={{ borderColor: 'var(--red-100)', background: 'var(--red-50)' }}>
-            <div className="guide-card-title">🍞 Common Gluten Foods</div>
-            <div className="guide-card-text">
-              Bread, pasta, cereal, crackers, cookies, cakes, pastries, pizza, beer, flour tortillas, couscous, 
-              breadcrumbs, croutons, pancakes, waffles, muffins, pretzels, bagels
-            </div>
-          </div>
-          <div className="guide-card" style={{ borderColor: 'var(--red-100)', background: 'var(--red-50)' }}>
-            <div className="guide-card-title">🔍 Hidden Gluten Sources</div>
-            <div className="guide-card-text">
-              Soy sauce, malt vinegar, brewer's yeast, seitan, some salad dressings, gravies, sauces with flour, 
-              processed meats, imitation crab, some medications, licorice, communion wafers
+            <div className="guide-card-title">🌾 All Gluten Ingredients to Avoid</div>
+            <div className="tag-list">
+              {GLUTEN_INGREDIENTS.map(i => (
+                <span key={i} className="tag tag-red">{i}</span>
+              ))}
             </div>
           </div>
           <div className="guide-card" style={{ borderColor: 'var(--amber-100)', background: 'var(--amber-50)' }}>
-            <div className="guide-card-title">⚠️ Watch Out For</div>
-            <div className="guide-card-text">
-              Modified food starch, maltodextrin, natural flavors, caramel color, dextrin, 
-              hydrolyzed vegetable protein, yeast extract, and anything labeled "may contain wheat"
+            <div className="guide-card-title">⚠️ All Caution Ingredients</div>
+            <div className="tag-list">
+              {CAUTION_INGREDIENTS.map(i => (
+                <span key={i} className="tag tag-amber">{i}</span>
+              ))}
             </div>
           </div>
         </div>
