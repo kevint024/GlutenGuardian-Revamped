@@ -269,12 +269,12 @@ export function analyzeIngredients(ingredientText: string): AnalysisResult {
 
   for (const ingredient of ingredients) {
     for (const gluten of GLUTEN_INGREDIENTS) {
-      if (ingredient.includes(gluten) || gluten.includes(ingredient)) {
+      if (ingredient.includes(gluten)) {
         foundGluten.add(gluten);
       }
     }
     for (const caution of CAUTION_INGREDIENTS) {
-      if (ingredient.includes(caution) || caution.includes(ingredient)) {
+      if (ingredient.includes(caution)) {
         foundCaution.add(caution);
       }
     }
