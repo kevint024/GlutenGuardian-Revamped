@@ -294,7 +294,7 @@ export default function AboutPage() {
       {/* Bug report/contact link */}
       <div style={{ textAlign: 'center', margin: '32px 0 0 0' }}>
         <Link
-          to="/bugreport"
+          to="/report"
           className="btn btn-secondary"
           style={{
             display: 'inline-flex',
