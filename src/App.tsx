@@ -12,6 +12,7 @@ import GuidePage from './pages/GuidePage'
 import RestaurantPage from './pages/RestaurantPage'
 import ProductDetail from './pages/ProductDetail'
 import AboutPage from './pages/AboutPage'
+import BugReportPage from './pages/BugReportPage'
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/restaurants" element={<RestaurantPage />} />
           <Route path="/product/:barcode" element={<ProductDetail />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/report" element={<BugReportPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

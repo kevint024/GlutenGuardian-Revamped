@@ -2,6 +2,7 @@ import { AnalysisResult, getStatusEmoji, getStatusLabel } from '../utils/glutenA
 import { Heart } from 'lucide-react'
 import { isFavorite, addFavorite, removeFavorite, getFavorites } from '../services/storage'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   result: AnalysisResult
@@ -14,6 +15,7 @@ export default function AnalysisResultCard({ result, productName, barcode, produ
   const [favorited, setFavorited] = useState(() => 
     productName ? isFavorite(productName, barcode) : false
   )
+  const navigate = useNavigate()
 
   const toggleFavorite = () => {
     if (!productName) return
@@ -103,6 +105,25 @@ export default function AnalysisResultCard({ result, productName, barcode, produ
           </ul>
         </div>
       )}
+
+      <div style={{ marginTop: 24, textAlign: 'center' }}>
+        <button
+          onClick={() => navigate(`/report${productName ? `?context=${encodeURIComponent(productName)}` : ''}`)}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            color: 'var(--gray-400)',
+            fontSize: '0.8rem',
+            textDecoration: 'underline',
+            textUnderlineOffset: 3,
+            padding: '6px 0',
+            fontFamily: 'inherit',
+          }}
+        >
+          Something not right? Let us know
+        </button>
+      </div>
     </div>
   )
 }
