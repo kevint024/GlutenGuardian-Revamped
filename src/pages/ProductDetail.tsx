@@ -39,11 +39,18 @@ export default function ProductDetail() {
         try {
           const result = analyzeIngredients(data.ingredients + ' ' + data.allergens + ' ' + data.traces)
           const hasGluten = data.allergens.toLowerCase().includes('gluten')
+          const hasGFLabel = data.labels.toLowerCase().includes('gluten-free') || data.labels.toLowerCase().includes('sans gluten')
+          let finalStatus = result.status
+          if (hasGFLabel) {
+            finalStatus = 'safe'
+          } else if (hasGluten && result.status !== 'unsafe') {
+            finalStatus = 'unsafe'
+          }
           addHistory({
             type: 'scan',
             name: data.name || `Barcode: ${barcode}`,
             barcode,
-            status: hasGluten && result.status !== 'unsafe' ? 'unsafe' : result.status,
+            status: finalStatus,
           })
         } catch {
           // Processing error shouldn't block showing the product
@@ -104,8 +111,15 @@ export default function ProductDetail() {
   const hasGlutenAllergen = product.allergens.toLowerCase().includes('gluten')
   const hasGlutenLabel = product.labels.toLowerCase().includes('gluten-free') || product.labels.toLowerCase().includes('sans gluten')
 
-  // Override: if the product is tagged with gluten as allergen, force unsafe
-  if (hasGlutenAllergen && result.status !== 'unsafe') {
+  // Gluten-free label takes priority — trust the manufacturer label
+  if (hasGlutenLabel) {
+    result = {
+      ...result,
+      status: 'safe',
+      summary: 'This product is labeled gluten-free by the manufacturer. Always verify ingredients for extra safety.',
+    }
+  } else if (hasGlutenAllergen && result.status !== 'unsafe') {
+    // Override: if tagged with gluten allergen and no GF label, force unsafe
     result = {
       ...result,
       status: 'unsafe',
