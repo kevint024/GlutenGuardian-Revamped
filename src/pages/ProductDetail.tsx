@@ -38,11 +38,12 @@ export default function ProductDetail() {
       if (data.found) {
         try {
           const result = analyzeIngredients(data.ingredients + ' ' + data.allergens + ' ' + data.traces)
+          const hasGluten = data.allergens.toLowerCase().includes('gluten')
           addHistory({
             type: 'scan',
             name: data.name || `Barcode: ${barcode}`,
             barcode,
-            status: result.status,
+            status: hasGluten && result.status !== 'unsafe' ? 'unsafe' : result.status,
           })
         } catch {
           // Processing error shouldn't block showing the product
@@ -97,11 +98,20 @@ export default function ProductDetail() {
   }
 
   const analysisText = [product.ingredients, product.allergens, product.traces].filter(Boolean).join(' ')
-  const result = analyzeIngredients(analysisText)
+  let result = analyzeIngredients(analysisText)
 
   // Check if allergens tag contains gluten
   const hasGlutenAllergen = product.allergens.toLowerCase().includes('gluten')
   const hasGlutenLabel = product.labels.toLowerCase().includes('gluten-free') || product.labels.toLowerCase().includes('sans gluten')
+
+  // Override: if the product is tagged with gluten as allergen, force unsafe
+  if (hasGlutenAllergen && result.status !== 'unsafe') {
+    result = {
+      ...result,
+      status: 'unsafe',
+      summary: 'This product is tagged with GLUTEN as an allergen by the manufacturer.',
+    }
+  }
 
   return (
     <div className="animate-in">
