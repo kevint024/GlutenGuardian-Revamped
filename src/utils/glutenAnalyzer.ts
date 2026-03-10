@@ -9,8 +9,20 @@ export interface AnalysisResult {
 }
 
 const GLUTEN_INGREDIENTS: string[] = [
-  // Core gluten grains
+  // Core gluten grains & direct gluten reference
+  'gluten',
   'wheat', 'barley', 'rye', 'triticale', 'spelt', 'farro', 'einkorn', 'emmer', 'kamut', 'freekeh',
+
+  // Non-English gluten grains (German, French, Spanish, Italian, Dutch, Portuguese)
+  'weizen', 'weizenmehl', 'hartweizengrieß', 'hartweizengriess', 'hartweizengrießmehl',
+  'hartweizen', 'dinkel', 'dinkelmehl', 'roggen', 'roggenmehl', 'gerste', 'gerstenmalz',
+  'grieß', 'griess', 'weizengrieß', 'weizenstärke', 'weizenkleber',
+  'blé', 'ble', 'farine de blé', 'farine de ble', 'semoule', 'semoule de blé',
+  'seigle', 'orge', 'épeautre', 'epeautre',
+  'trigo', 'harina de trigo', 'harina', 'centeno', 'cebada', 'espelta',
+  'grano', 'farina di grano', 'farina', 'segale', 'orzo', 'farro',
+  'tarwe', 'tarwemeel', 'rogge', 'gerst', 'spelt',
+  'trigo', 'farinha de trigo', 'centeio', 'cevada',
 
   // Wheat forms & derivatives
   'wheat flour', 'whole wheat flour', 'white flour', 'all-purpose flour', 'all purpose flour',
@@ -224,7 +236,14 @@ export const SAFE_GRAINS: string[] = [
 ];
 
 function normalizeText(text: string): string {
-  return text.toLowerCase().trim().replace(/\s+/g, ' ');
+  return text
+    .toLowerCase()
+    .trim()
+    // Strip Open Food Facts language prefixes (en:, de:, fr:, etc.)
+    .replace(/\b[a-z]{2}:/g, '')
+    // Strip underscore allergen markers from OFF ingredient text
+    .replace(/_/g, '')
+    .replace(/\s+/g, ' ');
 }
 
 export function analyzeIngredients(ingredientText: string): AnalysisResult {
