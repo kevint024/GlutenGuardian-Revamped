@@ -6,6 +6,24 @@ import { analyzeIngredients } from '../utils/glutenAnalyzer'
 import { addHistory } from '../services/storage'
 import AnalysisResultCard from '../components/AnalysisResultCard'
 
+const GLUTEN_FREE_LABEL_HINTS = [
+  'gluten-free',
+  'gluten free',
+  'no gluten',
+  'without gluten',
+  'sans gluten',
+  'sin gluten',
+  'senza glutine',
+  'glutenfrei',
+  'no-gluten',
+  'glutenfree'
+]
+
+function hasGlutenFreeLabel(labels: string) {
+  const normalizedLabels = labels.toLowerCase()
+  return GLUTEN_FREE_LABEL_HINTS.some(hint => normalizedLabels.includes(hint))
+}
+
 export default function ProductDetail() {
   const { barcode } = useParams<{ barcode: string }>()
   const navigate = useNavigate()
@@ -39,7 +57,7 @@ export default function ProductDetail() {
         try {
           const result = analyzeIngredients(data.ingredients + ' ' + data.allergens + ' ' + data.traces)
           const hasGluten = data.allergens.toLowerCase().includes('gluten')
-          const hasGFLabel = data.labels.toLowerCase().includes('gluten-free') || data.labels.toLowerCase().includes('sans gluten')
+          const hasGFLabel = hasGlutenFreeLabel(data.labels)
           let finalStatus = result.status
           if (hasGFLabel) {
             finalStatus = 'safe'
@@ -109,7 +127,7 @@ export default function ProductDetail() {
 
   // Check if allergens tag contains gluten
   const hasGlutenAllergen = product.allergens.toLowerCase().includes('gluten')
-  const hasGlutenLabel = product.labels.toLowerCase().includes('gluten-free') || product.labels.toLowerCase().includes('sans gluten')
+  const hasGlutenLabel = hasGlutenFreeLabel(product.labels)
 
   // Gluten-free label takes priority — trust the manufacturer label
   if (hasGlutenLabel) {

@@ -67,7 +67,7 @@ export default function IngredientPage() {
       )}
 
       <div className="info-box info-box-blue" style={{ marginTop: 20 }}>
-        <strong>💡 Tip:</strong> You can separate ingredients with commas, semicolons, or line breaks. Our analyzer checks against 50+ known gluten ingredients and 30+ ambiguous ones.
+        <strong>💡 Tip:</strong> You can separate ingredients with commas, semicolons, or line breaks. Our analyzer checks against hundereds of ingredients.
       </div>
 
       {/* Example buttons */}
