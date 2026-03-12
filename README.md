@@ -106,7 +106,7 @@ A: Yes, this project is open source and free to use under the MIT license.
 A: All modern browsers that support react and typescript can be used. It works best on Chrome though!
 
 **Q:How do I access the app?**
-A: The app is FREELY accessible online through cloudfare pages at [noglutenfor.me](noglutenfor.me).
+A: The app is FREELY accessible online through cloudfare pages at [noglutenfor.me](https://noglutenfor.me/).
 
 
 ### Technical Questions
