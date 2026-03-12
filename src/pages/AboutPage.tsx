@@ -144,7 +144,7 @@ export default function AboutPage() {
               <li>Collect, store, or transmit any personal information</li>
               <li>Use analytics, tracking pixels, or advertising SDKs</li>
               <li>Require any account or sign-in</li>
-              <li>Share any data with third parties (beyond the two API calls above)</li>
+              <li>Share any data with third parties (beyond the API call to Open Food Facts)</li>
               <li>Persist any data outside of your own device</li>
             </ul>
           </div>
@@ -246,11 +246,55 @@ export default function AboutPage() {
             <li style={{ marginBottom: 6 }}>Consult a qualified medical professional for diagnosis and treatment of coeliac disease or gluten sensitivity.</li>
             <li style={{ marginBottom: 6 }}>Verify ingredient lists directly on product packaging — product formulations change and database records may be outdated.</li>
             <li style={{ marginBottom: 6 }}>Look for certified gluten-free labels from accredited certification bodies as the most reliable indicator of safety.</li>
-            <li>Be aware that "wheat-free" does <em>not</em> automatically mean gluten-free (barley and rye also contain gluten).</li>
           </ul>
           <p style={{ marginBottom: 0 }}>
             Use of this app is entirely at your own risk. The developer accepts no liability for any adverse outcomes resulting from reliance on information provided by this app.
           </p>
+        </>
+      ),
+    },
+    {
+      id: 'known-issues',
+      icon: (
+        <span style={{ background: 'var(--amber-100)', borderRadius: 8, padding: 6, display: 'inline-flex', alignItems: 'center' }}>
+          <Info size={20} style={{ color: 'var(--amber-600)' }} />
+        </span>
+      ),
+      title: 'Known Issues & Bug Reporting',
+      content: (
+        <>
+          <div style={{ background: 'var(--amber-50)', border: '1px solid var(--amber-200)', borderRadius: 12, padding: '14px 18px', marginBottom: 16 }}>
+            <strong style={{ color: 'var(--amber-700)', fontSize: '1rem' }}>Known Issues</strong>
+            <ul style={{ paddingLeft: 22, marginTop: 8, marginBottom: 0, color: 'var(--amber-900)', fontSize: '0.95rem' }}>
+              <li style={{ marginBottom: 6 }}>Some products may have incomplete or outdated ingredient lists from Open Food Facts.</li>
+              <li style={{ marginBottom: 6 }}>OCR accuracy may vary depending on image quality and lighting.</li>
+              <li style={{ marginBottom: 6 }}>Ingredient analysis is limited to the app's internal database and may miss rare gluten sources. Items from countries outside of the US or with non-english ingredients may be undetected.</li>
+              <li>Browser compatibility: Best experienced on Chrome, Firefox, or Safari. Edge and mobile browsers may have minor UI issues.</li>
+            </ul>
+          </div>
+          <div style={{ fontSize: '0.95rem', marginBottom: 10 }}>
+            If you encounter a bug or want to suggest improvements, please:
+          </div>
+          <ul style={{ paddingLeft: 0, marginTop: 0, marginBottom: 0, listStyle: 'none' }}>
+            <li style={{ marginBottom: 6 }}>
+              <a
+                href="https://github.com/kevint024/GlutenGuardian-Revamped/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'var(--green-700)', fontWeight: 600, textDecoration: 'underline' }}
+              >
+                Open an issue on GitHub
+              </a>
+            </li>
+            <li>
+              <Link
+                to="/report"
+                style={{ color: 'var(--green-700)', fontWeight: 600, textDecoration: 'underline' }}
+              >
+                Report a bug / Contact
+              </Link>
+            </li>
+          </ul>
         </>
       ),
     },
@@ -267,23 +311,6 @@ export default function AboutPage() {
         <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)', lineHeight: 1.6, marginBottom: 12 }}>
           Your personal gluten-free safety companion
         </p>
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-            background: 'var(--green-50)',
-            border: '1px solid var(--green-200)',
-            borderRadius: 20,
-            padding: '4px 14px',
-            fontSize: '0.8rem',
-            color: 'var(--green-700)',
-            fontWeight: 600,
-          }}
-        >
-          <ShieldCheck size={14} />
-          All analysis runs locally on your device
-        </div>
       </div>
 
       {/* Accordion sections */}
