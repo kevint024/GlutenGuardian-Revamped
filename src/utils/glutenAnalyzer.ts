@@ -247,6 +247,16 @@ function normalizeText(text: string): string {
     .replace(/\s+/g, ' ');
 }
 
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// "malt" won't match inside "maltodextrin", etc.
+function matchesKeyword(text: string, keyword: string): boolean {
+  const pattern = new RegExp(`\\b${escapeRegex(keyword)}\\b`);
+  return pattern.test(text);
+}
+
 export function analyzeIngredients(ingredientText: string): AnalysisResult {
   const normalized = normalizeText(ingredientText);
 
@@ -270,12 +280,12 @@ export function analyzeIngredients(ingredientText: string): AnalysisResult {
 
   for (const ingredient of ingredients) {
     for (const gluten of GLUTEN_INGREDIENTS) {
-      if (ingredient.includes(gluten)) {
+      if (matchesKeyword(ingredient, gluten)) {
         foundGluten.add(gluten);
       }
     }
     for (const caution of CAUTION_INGREDIENTS) {
-      if (ingredient.includes(caution)) {
+      if (matchesKeyword(ingredient, caution)) {
         foundCaution.add(caution);
       }
     }
@@ -283,12 +293,12 @@ export function analyzeIngredients(ingredientText: string): AnalysisResult {
 
   // Also check the full text for multi-word matches
   for (const gluten of GLUTEN_INGREDIENTS) {
-    if (normalized.includes(gluten)) {
+    if (matchesKeyword(normalized, gluten)) {
       foundGluten.add(gluten);
     }
   }
   for (const caution of CAUTION_INGREDIENTS) {
-    if (normalized.includes(caution)) {
+    if (matchesKeyword(normalized, caution)) {
       foundCaution.add(caution);
     }
   }
