@@ -81,7 +81,7 @@ function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
           {/* Safe Items */}
           <div style={{ background: 'var(--green-50)', borderRadius: 8, padding: 12, marginBottom: 10 }}>
             <div style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--green-700)', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <ShieldCheck size={14} /> Safe Items
+              <ShieldCheck size={14} /> Possible Options
             </div>
             {restaurant.safeItems.map((item, i) => (
               <div key={i} style={{ fontSize: '0.8rem', padding: '3px 0', display: 'flex', alignItems: 'flex-start', gap: 6 }}>
@@ -163,7 +163,7 @@ export default function RestaurantPage() {
       <h1 className="page-title">🍽️ Restaurant Guide</h1>
       <p className="page-subtitle">
         Gluten-free safety ratings for <strong>{stats.total} popular U.S. restaurants</strong> across {stats.categories} categories.
-        Find safe menu items, tips, and cross-contamination warnings.
+        Find safe menu items, tips, and warnings. Always verify with the restaurant before dining, as menus and practices can change. ALWAYS check for cross-contamination!
       </p>
 
       {/* Stats Bar */}
