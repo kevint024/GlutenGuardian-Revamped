@@ -15,7 +15,8 @@ const GLUTEN_FREE_LABEL_HINTS = [
   'sin gluten',
   'senza glutine',
   'glutenfrei',
-  'no-gluten'
+  'no-gluten',
+  'glutenfree'
 ]
 
 function hasGlutenFreeLabel(labels: string) {
