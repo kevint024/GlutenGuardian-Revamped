@@ -1,14 +1,14 @@
 # 🛡️ Gluten Guardian Revamped
 
-Your personal gluten-free food safety companion. Scan, search, and verify any food product instantly. 
+Your personal gluten-free food safety companion. Scan, search, and verify any food product instantly, all from your web browser.
 
 ![React](https://img.shields.io/badge/React-19-blue) ![Vite](https://img.shields.io/badge/Vite-7-purple) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![PWA](https://img.shields.io/badge/PWA-Installable-brightgreen) ![License](https://img.shields.io/badge/License-MIT-green)
 
-[Access Here](https://noglutenfor.me/)
+[Access The App Here](https://noglutenfor.me/)
 ## Features
 
 ### 📷 Barcode Scanning
-Scan food product barcodes using your device camera with real-time detection. Instantly looks up products in the Open Food Facts database.
+Scan food product barcodes using your device camera with real-time detection. Instantly looks up products in the [Open Food Facts](https://ssl-api.openfoodfacts.org/) database and gives them a gluten safety rating.
 
 ### 🔍 Product Search
 Search the [Open Food Facts](https://world.openfoodfacts.net/) database — over 3 million products — and instantly see gluten safety ratings.
@@ -57,6 +57,7 @@ Three-level safety rating system:
 
 **Flagged ambiguous ingredients:** modified food starch, maltodextrin, natural flavors, caramel color, hydrolyzed vegetable protein, yeast extract, soy sauce, and others.
 
+For a full list of ingredients that are detected, check the [Analyzer File](src/utils/glutenAnalyzer.ts)
 ## Getting Started
 
 ### Prerequisites
@@ -78,59 +79,56 @@ npm run build
 npm run preview
 ```
 
-The dev server starts at `http://localhost:5173/`.
+The dev server starts.
 
-### Deployment (Cloudflare Pages)
-
-The build outputs to `dist/`. A Vite plugin automatically copies `index.html` to `200.html` for Cloudflare Pages SPA fallback — no `_redirects` file needed.
 
 ## Tech Stack
 
-| Technology | Purpose |
+| Tool | Use |
 |-----------|---------|
-| [React 19](https://react.dev/) | UI framework |
+| [React 19](https://react.dev/) | UI |
 | [Vite 7](https://vite.dev/) | Build tool & dev server |
-| [TypeScript 5](https://www.typescriptlang.org/) | Type safety |
+| [TypeScript 5](https://www.typescriptlang.org/) | Types|
 | [React Router v7](https://reactrouter.com/) | Client-side routing |
 | [html5-qrcode](https://github.com/mebjas/html5-qrcode) | Barcode scanning via camera |
 | [Tesseract.js](https://tesseract.projectnaptha.com/) | OCR for ingredient label scanning |
 | [Lucide React](https://lucide.dev/) | Icons |
 | [Open Food Facts API](https://world.openfoodfacts.net/data) | Product database |
 
-## Project Structure
+## FAQ
 
-```
-src/
-├── main.tsx                    # App entry point
-├── App.tsx                     # Router & route definitions
-├── index.css                   # Global styles & design system
-├── components/
-│   ├── Layout.tsx              # App shell with header & bottom nav
-│   ├── AnalysisResultCard.tsx  # Reusable gluten analysis display
-│   └── InstallPrompt.tsx       # PWA install popup
-├── data/
-│   ├── dishDatabase.ts         # 300+ dishes across 26 cuisines
-│   └── restaurantDatabase.ts   # 50+ U.S. restaurants with GF ratings
-├── pages/
-│   ├── HomePage.tsx            # Dashboard with quick actions & history
-│   ├── ScanPage.tsx            # Barcode scanner (camera)
-│   ├── SearchPage.tsx          # Product search
-│   ├── ProductDetail.tsx       # Full product analysis view
-│   ├── IngredientPage.tsx      # Manual ingredient checker
-│   ├── DishPage.tsx            # Dish/food lookup with cuisine browser
-│   ├── RestaurantPage.tsx      # Restaurant GF guide with search & filters
-│   ├── ScanImagePage.tsx       # OCR label/image scanner
-│   ├── FavoritesPage.tsx       # Saved favorites & scan history
-│   └── GuidePage.tsx           # Gluten-free reference guide
-├── services/
-│   ├── openFoodFacts.ts        # Open Food Facts API client
-│   └── storage.ts              # LocalStorage for favorites & history
-└── utils/
-    └── glutenAnalyzer.ts       # Core gluten detection engine
-```
-##Discliamer
-Use at your own risk. Information from Gluten Guardian is not medical advice
+### General Questions
+
+**Q: Is this free to use?**
+A: Yes, this project is open source and free to use under the MIT license.
+
+**Q: What browsers are supported?**
+A: All modern browsers that support react and typescript can be used. It works best on Chrome though!
+
+**Q:How do I access the app?**
+A: The app is FREELY accessible online through cloudfare pages at [noglutenfor.me](noglutenfor.me).
+
+
+### Technical Questions
+
+**Q: How do I contribute?**
+A: Simply make a pull request! Always looking for help, especially with localization and restraunt guides.
+
+**Q: How do I report a bug?**
+A: Please create an [issue](https://github.com/kevint024/GlutenGuardian-Revamped/issues) on GitHub with a detailed description and reproduction steps.
+
+**Q: Do you collect my data?**
+A: No, Gluten Guardian is designed to not collect ANY of your data. All scans and favorites are stored locally on your own device and can be removed by clearing your browser data. The only communication the app makes is with the Open Food Facts database to fetch information on the products you are searching for.
+
+
+## Discliamer
+Use at your own risk. Information from Gluten Guardian does not provide medical advice.
+
 
 ## License
 
-MIT
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details. It also makes use of the [Open Food Facts Database](https://ssl-api.openfoodfacts.org/discover) which is governed by the [Open Database License](https://opendatacommons.org/licenses/odbl/1-0/)
+
+
+
+
