@@ -74,15 +74,15 @@ const GLUTEN_INGREDIENTS: string[] = [
   'sourdough', 'focaccia', 'ciabatta',
 
   // Sauces & condiments with wheat
-  'soy sauce', 'shoyu', 'tamari', // note: some tamari is GF but many aren't
+  'soy sauce', 'shoyu', 'tamari', 
   'teriyaki sauce', 'teriyaki',
   'hoisin sauce', 'hoisin',
-  'oyster sauce', // most contain wheat
-  'miso paste', // some varieties contain barley
+  'oyster sauce', 
+  'miso paste', 
 
   // Cereals & snacks
   'cream of wheat', 'farina cereal',
-  'granola', // most contain oats with wheat cross-contamination + wheat ingredients
+  'granola', 
   'muesli',
   'pretzels', 'pretzel',
 
@@ -104,7 +104,7 @@ const GLUTEN_INGREDIENTS: string[] = [
 const CAUTION_INGREDIENTS: string[] = [
   // Starches (may be wheat-derived)
   'modified food starch', 'modified starch', 'food starch',
-  'modified corn starch', // usually safe but listed for awareness
+  'modified corn starch', 
   'starch', 'vegetable starch', 'edible starch',
   'pregelatinized starch', 'resistant starch',
   'dextrin', 'maltodextrin', 'cyclodextrin',
@@ -130,28 +130,27 @@ const CAUTION_INGREDIENTS: string[] = [
 
   // Yeast & fermentation
   'yeast extract', 'autolyzed yeast extract', 'autolyzed yeast',
-  'torula yeast', 'nutritional yeast', // usually safe but can have barley
+  'torula yeast', 'nutritional yeast', 
   'yeast nutrient',
 
   // Sauces & condiments
   'worcestershire sauce', 'worcestershire',
-  'fish sauce', // some brands contain wheat
+  'fish sauce', 
   'barbecue sauce', 'bbq sauce',
   'salad dressing', 'ranch dressing', 'caesar dressing',
-  'marinara sauce', // some thickened with flour
-  'curry paste', 'curry powder', // some blends contain wheat
-  'mustard', 'mustard powder', // some add wheat flour
-  'ketchup', // rarely contains gluten but some brands do
-  'mayo', 'mayonnaise', // usually safe but check
+  'marinara sauce', 
+  'curry paste', 'curry powder', 
+  'mustard', 'mustard powder', 
+  'ketchup', 
+  'mayo', 'mayonnaise', 
   'hot sauce',
 
   // Dairy & cheese
   'processed cheese', 'imitation cheese', 'cheese sauce',
   'cheese powder', 'cheese flavoring',
-  'cream cheese', // some flavored varieties have wheat
-  'cottage cheese', // some brands add starch
-  'sour cream', // some brands add starch
-  'ice cream', // cookie/cake varieties
+  'cream cheese', 
+  'cottage cheese', 
+  'sour cream', 
   'frozen yogurt',
 
   // Meat & protein products
@@ -177,11 +176,11 @@ const CAUTION_INGREDIENTS: string[] = [
   'licorice', 'liquorice', 'twizzlers',
   'candy', 'chocolate', 'chocolate bar',
   'communion wafer', 'wafer', 'wafers',
-  'rice cakes', // usually safe but may have flavored coatings
+  'rice cakes', 
   'chips', 'potato chips', 'flavored chips',
   'tortilla chips', 'corn chips',
   'trail mix',
-  'dried fruit', // some have wheat-based dusting
+  'dried fruit', 
 
   // Baking & cooking
   'baking powder', 'baking mix',
@@ -191,37 +190,37 @@ const CAUTION_INGREDIENTS: string[] = [
   'thickener', 'thickening agent',
   'stabilizer', 'stabiliser',
   'emulsifier', 'emulsifying agent',
-  'lecithin', // usually soy but can be wheat
+  'lecithin', 
   'mono and diglycerides', 'mono- and diglycerides',
   'diglycerides', 'monoglycerides',
-  'xanthan gum', // safe but often confused; included for awareness
+  'xanthan gum', 
   'guar gum',
 
   // Vinegar & alcohol
-  'vinegar', 'distilled vinegar', // usually safe but some debate
+  'vinegar', 'distilled vinegar', 
   'white vinegar', 'wine vinegar',
   'rice vinegar', 'rice wine vinegar',
   'cooking wine', 'cooking sherry',
 
   // Asian ingredients
   'miso', 'miso soup',
-  'tofu', 'fried tofu', // tofu itself is GF but fried/marinated may not be
-  'edamame', // usually safe but check seasoning
-  'rice noodles', // usually safe but check for wheat blend
+  'tofu', 'fried tofu', 
+  'edamame', 
+  'rice noodles', 
   'bean sauce', 'black bean sauce',
   'sweet chili sauce', 'sriracha',
-  'coconut aminos', // safe alternative but listed for completeness
+  'coconut aminos', 
 
   // Oats (controversial)
   'oats', 'oatmeal', 'oat flour', 'oat bran',
   'oat fiber', 'oat milk',
-  // Oats are naturally GF but frequently cross-contaminated
+ 
 
   // Supplements & medicine
   'glucose syrup', 'brown rice syrup',
   'corn syrup', 'high fructose corn syrup',
-  'citric acid', // usually safe but can be wheat-derived in rare cases
-  'vitamin e', 'tocopherol', // wheat germ is a source
+  'citric acid', 
+  'vitamin e', 'tocopherol',
 ];
 
 export { GLUTEN_INGREDIENTS, CAUTION_INGREDIENTS }
