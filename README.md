@@ -120,6 +120,8 @@ A: Please create an [issue](https://github.com/kevint024/GlutenGuardian-Revamped
 **Q: Do you collect my data?**
 A: No, Gluten Guardian is designed to not collect ANY of your data. All scans and favorites are stored locally on your own device and can be removed by clearing your browser data. The only communication the app makes is with the Open Food Facts database to fetch information on the products you are searching for.
 
+**Q: How does this work?**
+A: Gluten Guardian uses the barcode that you scan/item that you search and talks to the Open Food API, which returns a list of ingredients. The ingreidents are then normalized and ran against the Gluten Analysis engine, which contains gluten ingredeitns. If there is a match, it is marked as unsafe. If you are scanning an ingredients label or inputting raw ingredietns, we simply run the inputted ingredients through our list before marking it.
 
 ## Discliamer
 Use at your own risk. Information from Gluten Guardian does not provide medical advice.
