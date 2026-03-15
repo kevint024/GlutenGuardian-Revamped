@@ -26,6 +26,7 @@ export default function HomePage() {
         <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)', lineHeight: 1.6 }}>
           Your personal gluten-free safety companion.<br />
           Scan, search, and verify any food product.
+          Non U.S Based Use is not recommended (yet)
         </p>
       </div>
 
