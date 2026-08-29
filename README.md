@@ -88,7 +88,7 @@ The dev server starts.
 |-----------|---------|
 | [React 19](https://react.dev/) | UI |
 | [Vite 7](https://vite.dev/) | Build tool & dev server |
-| [TypeScript 5](https://www.typescriptlang.org/) | Types|
+| [TypeScript 5](https://www.typescriptlang.org/) | Back end|
 | [React Router v7](https://reactrouter.com/) | Client-side routing |
 | [html5-qrcode](https://github.com/mebjas/html5-qrcode) | Barcode scanning via camera |
 | [Tesseract.js](https://tesseract.projectnaptha.com/) | OCR for ingredient label scanning |
